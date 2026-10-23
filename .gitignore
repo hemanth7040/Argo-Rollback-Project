@@ -31,3 +31,7 @@ override.tf.json
 .env
 .env.*
 !.env.example
+
+# Local AWS IAM policy files
+github-actions-trust-policy.json
+github-actions-ecr-policy.json
