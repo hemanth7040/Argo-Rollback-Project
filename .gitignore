@@ -1,5 +1,5 @@
 # Terraform working directory
-**/.terraform/*
+**/.terraform/
 
 # Terraform state and backups
 *.tfstate
@@ -35,3 +35,7 @@ override.tf.json
 # Local AWS IAM policy files
 github-actions-trust-policy.json
 github-actions-ecr-policy.json
+
+# Terraform saved plan files
+*.tfplan
+terraform/eks-plan

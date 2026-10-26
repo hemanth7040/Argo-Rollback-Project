@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-project-app
+  namespace: default
+  labels:
+    app: devops-project-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-project-app
+  template:
+    metadata:
+      labels:
+        app: devops-project-app
+    spec:
+      containers:
+        - name: app
+          image: 298660929912.dkr.ecr.ap-south-2.amazonaws.com/devops-project-app:857a6151d8cde5fe40e880be49a58c2ccdb7acce
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "128Mi"

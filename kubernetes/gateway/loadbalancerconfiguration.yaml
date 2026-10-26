@@ -1,0 +1,10 @@
+apiVersion: gateway.k8s.aws/v1beta1
+kind: LoadBalancerConfiguration
+metadata:
+  name: devops-project-alb-config
+  namespace: default
+spec:
+  scheme: internet-facing
+  loadBalancerSubnets:
+    - identifier: subnet-0c7179953e27587b1
+    - identifier: subnet-0c8237938354a5f7e

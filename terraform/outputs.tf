@@ -33,20 +33,6 @@ output "aws_account_id" {
   value       = data.aws_caller_identity.current.account_id
 }
 
-output "ec2_instance_id" {
-  description = "ID of the EC2 instance"
-  value       = module.ec2.instance_id
-}
-
-output "ec2_private_ip" {
-  description = "Private IP address of the EC2 instance"
-  value       = module.ec2.instance_private_ip
-}
-
-output "ec2_instance_arn" {
-  description = "ARN of the EC2 instance"
-  value       = module.ec2.instance_arn
-}
 
 output "security_group_id" {
   description = "ID of the EC2 security group"
@@ -61,4 +47,19 @@ output "alb_dns_name" {
 output "alb_arn" {
   description = "ARN of the Application Load Balancer"
   value       = module.alb.alb_arn
+}
+# EKS Cluster Outputs
+output "eks_cluster_name" {
+  description = "Name of the EKS cluster"
+  value       = module.eks.cluster_name
+}
+
+output "eks_cluster_endpoint" {
+  description = "Kubernetes API endpoint"
+  value       = module.eks.cluster_endpoint
+}
+
+output "eks_node_group_name" {
+  description = "Name of the EKS managed node group"
+  value       = module.eks.node_group_name
 }

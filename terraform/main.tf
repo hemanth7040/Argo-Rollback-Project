@@ -85,16 +85,6 @@ module "security_group" {
   vpc_id              = data.aws_vpc.default.id
 }
 
-module "ec2" {
-  source = "./modules/ec2"
-
-  instance_name        = var.instance_name
-  instance_type        = var.instance_type
-  ami_id               = "ami-06f74f62d9bee8aa5"
-  subnet_id            = data.aws_subnets.default.ids[0]
-  security_group_ids   = [module.security_group.security_group_id]
-  iam_instance_profile = module.ec2_ssm_role.instance_profile_name
-}
 
 module "ec2_ssm_role" {
   source = "./modules/ec2-ssm-role"
@@ -147,4 +137,19 @@ module "ecr" {
   source = "./modules/ecr"
 
   repository_name = "devops-project-app"
+}
+# Amazon EKS Cluster
+module "eks" {
+  source = "./modules/eks"
+
+  cluster_name       = "devops-project-eks"
+  kubernetes_version = "1.36"
+
+  private_subnet_ids = values(module.vpc.private_subnet_ids)
+
+  tags = {
+    Project     = "DevOps-Rollback-Project"
+    Environment = "dev"
+    ManagedBy   = "Terraform"
+  }
 }
