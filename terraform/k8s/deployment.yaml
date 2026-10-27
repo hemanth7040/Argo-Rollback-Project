@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: 298660929912.dkr.ecr.ap-south-2.amazonaws.com/devops-project-app:857a6151d8cde5fe40e880be49a58c2ccdb7acce
+          image: 298660929912.dkr.ecr.ap-south-2.amazonaws.com/devops-project-app:e1577f7d8d752d6030df59a5434566b85601470e
           ports:
             - name: http
               containerPort: 80
