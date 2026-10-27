@@ -39,3 +39,7 @@ github-actions-ecr-policy.json
 # Terraform saved plan files
 *.tfplan
 terraform/eks-plan
+
+
+#temporary files
+argocd_password.txt
