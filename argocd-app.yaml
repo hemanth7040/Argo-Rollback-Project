@@ -12,6 +12,17 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: default
+  ignoreDifferences:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: devops-project-route
+      namespace: default
+      jqPathExpressions:
+        - '.spec.rules[].backendRefs[].weight'
   syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
     syncOptions:
       - CreateNamespace=false
+      - RespectIgnoreDifferences=true

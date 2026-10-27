@@ -4,7 +4,11 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+  - rollout.yaml
+  - stable-service.yaml
+  - canary-service.yaml
+  - httproute.yaml
 
 images:
   - name: 298660929912.dkr.ecr.ap-south-2.amazonaws.com/devops-project-app
-    newTag: e1577f7d8d752d6030df59a5434566b85601470e
+    newTag: 38326667bb5001e9d0e93ba9b685ee0c420b9570

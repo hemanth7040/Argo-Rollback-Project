@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: devops-project-app-rollout
+  namespace: default
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+
+  selector:
+    matchLabels:
+      app: devops-project-app-rollout
+
+  template:
+    metadata:
+      labels:
+        app: devops-project-app-rollout
+    spec:
+      containers:
+        - name: app
+          image: 298660929912.dkr.ecr.ap-south-2.amazonaws.com/devops-project-app:38326667bb5001e9d0e93ba9b685ee0c420b9570
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
+
+  strategy:
+    canary:
+      stableService: devops-project-app-stable
+      canaryService: devops-project-app-canary
+
+      trafficRouting:
+        plugins:
+          argoproj-labs/gatewayAPI:
+            httpRoute: devops-project-route
+            namespace: default
+
+      steps:
+        - setWeight: 20
+        - pause:
+            duration: 60s
+        - setWeight: 50
+        - pause:
+            duration: 60s
+        - setWeight: 100
