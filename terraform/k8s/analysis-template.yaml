@@ -13,9 +13,7 @@ spec:
       provider:
         prometheus:
           address: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+          # TEMPORARY TEST: forces the analysis to fail.
+          # Restore the original probe_success query after the rollback test.
           query: |
-            min(
-              probe_success{
-                instance="http://devops-project-app-canary.default.svc.cluster.local/"
-              }
-            ) or vector(0)
+            vector(0)
