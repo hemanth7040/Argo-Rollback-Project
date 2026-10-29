@@ -8,6 +8,7 @@ resources:
   - stable-service.yaml
   - canary-service.yaml
   - httproute.yaml
+  - monitoring/canary-probe.yaml
 
 images:
   - name: 298660929912.dkr.ecr.ap-south-2.amazonaws.com/devops-project-app

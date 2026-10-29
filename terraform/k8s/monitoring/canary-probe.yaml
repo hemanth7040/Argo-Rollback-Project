@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: devops-project-app-canary
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  interval: 15s
+  scrapeTimeout: 5s
+  module: http_2xx
+  prober:
+    url: blackbox-exporter-prometheus-blackbox-exporter.monitoring.svc.cluster.local:9115
+    scheme: http
+    path: /probe
+  targets:
+    staticConfig:
+      static:
+        - http://devops-project-app-canary.default.svc.cluster.local/
