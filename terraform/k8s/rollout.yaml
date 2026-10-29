@@ -13,6 +13,8 @@ spec:
 
   template:
     metadata:
+      annotations:
+        rollback-test: "2026-10-29"
       labels:
         app: devops-project-app-rollout
     spec:
