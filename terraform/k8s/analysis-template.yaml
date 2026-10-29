@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: canary-health-check
+  namespace: default
+spec:
+  metrics:
+    - name: canary-http-health
+      interval: 15s
+      count: 4
+      failureLimit: 1
+      successCondition: result[0] == 1
+      provider:
+        prometheus:
+          address: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+          query: |
+            min(
+              probe_success{
+                instance="http://devops-project-app-canary.default.svc.cluster.local/"
+              }
+            ) or vector(0)

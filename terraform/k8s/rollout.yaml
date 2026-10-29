@@ -66,7 +66,15 @@ spec:
         - setWeight: 20
         - pause:
             duration: 60s
+        - analysis:
+            templates:
+              - templateName: canary-health-check
+
         - setWeight: 50
         - pause:
             duration: 60s
+        - analysis:
+            templates:
+              - templateName: canary-health-check
+
         - setWeight: 100
