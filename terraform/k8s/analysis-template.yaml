@@ -16,4 +16,8 @@ spec:
           # TEMPORARY TEST: forces the analysis to fail.
           # Restore the original probe_success query after the rollback test.
           query: |
-            vector(0)
+            min(
+              probe_success{
+                instance="http://devops-project-app-canary.default.svc.cluster.local/"
+              }
+            ) or vector(0)
