@@ -1,0 +1,56 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: devops-kubernetes-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: kubernetes-health-alerts
+      rules:
+
+        - alert: PodCrashLoopBackOff
+          expr: kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"} == 1
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Pod is in CrashLoopBackOff"
+            description: "Pod {{ $labels.namespace }}/{{ $labels.pod }} container {{ $labels.container }} is crash looping."
+
+        - alert: ContainerRestartingFrequently
+          expr: increase(kube_pod_container_status_restarts_total[15m]) > 3
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Container restarting frequently"
+            description: "Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} restarted more than 3 times in 15 minutes."
+
+        - alert: KubernetesNodeNotReady
+          expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Kubernetes node is NotReady"
+            description: "Node {{ $labels.node }} is reporting NotReady."
+
+        - alert: HighNodeCPU
+          expr: 100 * (1 - avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 85
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High node CPU utilization"
+            description: "Node {{ $labels.instance }} CPU utilization is above 85% for 5 minutes."
+
+        - alert: HighNodeMemory
+          expr: 100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 85
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High node memory utilization"
+            description: "Node {{ $labels.instance }} memory utilization is above 85% for 5 minutes."

@@ -1,0 +1,25 @@
+apiVersion: gateway.k8s.aws/v1beta1
+kind: TargetGroupConfiguration
+metadata:
+  name: devops-project-app-stable-targets
+  namespace: default
+spec:
+  targetReference:
+    group: ""
+    kind: Service
+    name: devops-project-app-stable
+  defaultConfiguration:
+    targetType: ip
+---
+apiVersion: gateway.k8s.aws/v1beta1
+kind: TargetGroupConfiguration
+metadata:
+  name: devops-project-app-canary-targets
+  namespace: default
+spec:
+  targetReference:
+    group: ""
+    kind: Service
+    name: devops-project-app-canary
+  defaultConfiguration:
+    targetType: ip

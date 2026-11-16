@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: application-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: application-alerts
+      rules:
+        - alert: ApplicationDown
+          expr: probe_success == 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Argo application is unavailable"
+            description: "Application HTTP probe has failed for 2 minutes."
