@@ -41,5 +41,14 @@ github-actions-ecr-policy.json
 terraform/eks-plan
 
 
-#temporary files
-argocd_password.txt
+# Sensitive password and credential files
+*password*.txt
+*secret*.txt
+*credentials*.txt
+
+# Local backups
+backups/
+
+# Local configuration backups
+*-backup.yaml
+*-backup.yml
